@@ -1,6 +1,6 @@
-# Files in the GSB project
-.gitattributes
-.gitignore
+# git files
+.gitattributes export-ignore
+.gitignore export-ignore
 
 # Windows image file caches
 Thumbs.db
