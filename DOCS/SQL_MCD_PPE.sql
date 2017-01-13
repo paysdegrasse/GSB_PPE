@@ -15,8 +15,8 @@ CREATE TABLE VisiteurMedical(
         Adresse     Varchar (255) ,
         Ville       Varchar (255) ,
         Secteur     Varchar (255) ,
-        Labo        Varchar (255) ,
-        Email       Varchar (255) ,
+        Labo        Varchar (25) ,
+        Email       Varchar (25) ,
         PRIMARY KEY (NumVisiteur )
 )ENGINE=InnoDB;
 
@@ -26,18 +26,15 @@ CREATE TABLE VisiteurMedical(
 #------------------------------------------------------------
 
 CREATE TABLE RapportdeVisite(
-        NumRapport       Int NOT NULL ,
-        MotifVisite      Varchar (255) ,
-        Bilan            Text ,
-        DateRapport      Date ,
-        OffreEchantillon Int ,
-        VisiteurMedical  Int ,
-        Praticien        Varchar (255) ,
-        NumVisiteur      Int ,
-        NumPraticien     Int ,
-        NumOffre         Int ,
-        PRIMARY KEY (NumRapport ) ,
-        INDEX (OffreEchantillon ,VisiteurMedical ,Praticien )
+        NumRapport     Int NOT NULL ,
+        MotifVisite    Varchar (255) ,
+        Bilan          Text ,
+        DateRapport    Date ,
+        NumVisiteur    Int ,
+        NumPraticien   Int ,
+        NumOffre       Int ,
+        NumEchantillon Int ,
+        PRIMARY KEY (NumRapport )
 )ENGINE=InnoDB;
 
 
@@ -65,12 +62,13 @@ CREATE TABLE Praticien(
 
 
 #------------------------------------------------------------
-# Table: OffreEchantillon
+# Table: Echantillon
 #------------------------------------------------------------
 
-CREATE TABLE OffreEchantillon(
-        NumOffre Int NOT NULL ,
-        PRIMARY KEY (NumOffre )
+CREATE TABLE Echantillon(
+        NumEchantillon Int NOT NULL ,
+        quantite       Int ,
+        PRIMARY KEY (NumEchantillon )
 )ENGINE=InnoDB;
 
 
@@ -79,14 +77,13 @@ CREATE TABLE OffreEchantillon(
 #------------------------------------------------------------
 
 CREATE TABLE compose(
-        Quantite      Int ,
-        NumOffre      Int NOT NULL ,
-        NumMedicament Int NOT NULL ,
-        PRIMARY KEY (NumOffre ,NumMedicament )
+        NumMedicament  Int NOT NULL ,
+        NumEchantillon Int NOT NULL ,
+        PRIMARY KEY (NumMedicament ,NumEchantillon )
 )ENGINE=InnoDB;
 
 ALTER TABLE RapportdeVisite ADD CONSTRAINT FK_RapportdeVisite_NumVisiteur FOREIGN KEY (NumVisiteur) REFERENCES VisiteurMedical(NumVisiteur);
 ALTER TABLE RapportdeVisite ADD CONSTRAINT FK_RapportdeVisite_NumPraticien FOREIGN KEY (NumPraticien) REFERENCES Praticien(NumPraticien);
-ALTER TABLE RapportdeVisite ADD CONSTRAINT FK_RapportdeVisite_NumOffre FOREIGN KEY (NumOffre) REFERENCES OffreEchantillon(NumOffre);
-ALTER TABLE compose ADD CONSTRAINT FK_compose_NumOffre FOREIGN KEY (NumOffre) REFERENCES OffreEchantillon(NumOffre);
+ALTER TABLE RapportdeVisite ADD CONSTRAINT FK_RapportdeVisite_NumEchantillon FOREIGN KEY (NumEchantillon) REFERENCES Echantillon(NumEchantillon);
 ALTER TABLE compose ADD CONSTRAINT FK_compose_NumMedicament FOREIGN KEY (NumMedicament) REFERENCES Medicament(NumMedicament);
+ALTER TABLE compose ADD CONSTRAINT FK_compose_NumEchantillon FOREIGN KEY (NumEchantillon) REFERENCES Echantillon(NumEchantillon);
