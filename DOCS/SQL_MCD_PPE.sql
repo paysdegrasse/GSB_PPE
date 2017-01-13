@@ -32,7 +32,6 @@ CREATE TABLE RapportdeVisite(
         DateRapport    Date ,
         NumVisiteur    Int ,
         NumPraticien   Int ,
-        NumOffre       Int ,
         NumEchantillon Int ,
         PRIMARY KEY (NumRapport )
 )ENGINE=InnoDB;
@@ -67,7 +66,6 @@ CREATE TABLE Praticien(
 
 CREATE TABLE Echantillon(
         NumEchantillon Int NOT NULL ,
-        quantite       Int ,
         PRIMARY KEY (NumEchantillon )
 )ENGINE=InnoDB;
 
@@ -77,6 +75,7 @@ CREATE TABLE Echantillon(
 #------------------------------------------------------------
 
 CREATE TABLE compose(
+        quantite       Int ,
         NumMedicament  Int NOT NULL ,
         NumEchantillon Int NOT NULL ,
         PRIMARY KEY (NumMedicament ,NumEchantillon )
